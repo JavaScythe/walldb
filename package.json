@@ -2,6 +2,7 @@
   "dependencies": {
     "acebase": "^1.29.2",
     "discord.js-selfbot-v13": "^2.14.9",
+    "express": "^4.18.2",
     "short-unique-id": "^4.4.4"
   }
 }

@@ -66,6 +66,6 @@ function startCollection(){
 }
 async function upload(json){
     let id = idr();
-    wdb.ref(id).set(json);
+    wdb.ref("/walls/"+id).set(json);
 }
 client.login(fs.readFileSync(__dirname + '/token', 'utf8'));

@@ -4,8 +4,11 @@ let db = new AceBase('wall', {
     //@ts-ignore //acebase doesn't like this
     path: "../data/"
 });
-db.ready(() => {
+db.ready(async () => {
     //https://github.com/appy-one/acebase#iterating-streaming-children
+    let b = await db.ref('/walls').get();
+    console.log(Object.keys(b.val()).length);
+    return true;
     db.ref('/').forEach(wall => {
         const w = wall.val();
         console.log(wall.key+": "+w.url || w.proxiedUrl);
