@@ -8,10 +8,10 @@ db.ready(async () => {
     //https://github.com/appy-one/acebase#iterating-streaming-children
     let b = await db.ref('/walls').get();
     console.log(Object.keys(b.val()).length);
-    return true;
-    db.ref('/').forEach(wall => {
+    //return true;
+    db.ref('/walls').forEach(wall => {
         const w = wall.val();
-        console.log(wall.key+": "+w.url || w.proxiedUrl);
+        console.log(wall.key+": "+w.number+": "+w.url || w.proxiedUrl);
      });
     //ref.set({"joe": 2323});
 });

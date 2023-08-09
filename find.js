@@ -9,8 +9,12 @@ let wdb = new AceBase('wall', {
 });
 const { Client } = require('discord.js-selfbot-v13');
 const client = new Client({});
-let last = fs.readFileSync(__dirname + '/last', 'utf8');
-let stats = JSON.parse(fs.readFileSync(__dirname + '/stats.json', 'utf8'));
+let last = "1138627558875869205";
+let stats = {
+    recived: 0,
+    walls: 0
+}
+let gid = 10000;
 //let db = JSON.parse(fs.readFileSync(__dirname + '/db.json', 'utf8'));
 const start = new Date().getTime();
 client.on('ready', async () => {
@@ -24,15 +28,16 @@ function startCollection(){
         stats.recived += messages.size;
         let adds = 0;
         //Iterate through the messages here with the variable "messages".
+        let chunk = {};
         messages.forEach(message => {
             //log all images from messages
             if(message.attachments.size > 0){
                 message.attachments.each(attachment => {
-                    upload({
+                    chunk[idr()] = {
                         url: attachment.url,
                         authorID: message.author.id,
                         messageID: message.id
-                    });
+                    };
                     adds++;
                 });
             }
@@ -41,12 +46,12 @@ function startCollection(){
                 message.embeds.forEach(embed => {
                     if(embed.type == "image"){
                         if(embed.thumbnail == undefined) return;
-                        upload({
+                        chunk[idr()] = {
                             srcUrl: embed.url,
                             proxiedUrl: embed.thumbnail.proxyURL,
                             authorID: message.author.id,
                             messageID: message.id
-                        });
+                        }
                         adds++;
                     }
                 });
@@ -58,14 +63,22 @@ function startCollection(){
             }
         });
         stats.walls += adds;
-        console.log(`${adds} new, ${stats.walls} total`);
-        //fs.writeFileSync(__dirname + '/db.json', JSON.stringify(db));
-        fs.writeFileSync(__dirname + '/stats.json', JSON.stringify(stats));
+        console.log(`${adds} new, ${stats.walls} total, ${stats.recived} recived`);
+        upload(chunk);
         startCollection();
     });
 }
+//make this a ref().update() instead of set() (bulk add)
 async function upload(json){
-    let id = idr();
-    wdb.ref("/walls/"+id).set(json);
+    for(let i in json){
+        if(json[i] == undefined){
+            delete json[i];
+            continue;
+        }
+        json[i].number = gid;
+        gid++;
+    }
+    wdb.ref("/walls").update(json);
 }
+//24600 total, 77612 recived
 client.login(fs.readFileSync(__dirname + '/token', 'utf8'));

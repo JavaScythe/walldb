@@ -47,6 +47,6 @@ client.on('messageCreate', async message => {
 async function upload(json){
     let id = idr();
     console.log(json);
-    //wdb.ref(id).set(json);
+    //wdb.ref("/walls/"+id).set(json);
 }
 client.login(fs.readFileSync(__dirname + '/token', 'utf8'));
