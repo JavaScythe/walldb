@@ -12,9 +12,8 @@ wdb.on('ready', async () => {
     await wdb.indexes.create('walls', 'colors');
     console.log("Indexes (indexi???) ready");
 });
-app.get("/", (req,res)=>{
-    res.sendFile(__dirname+"/web/index.html");
-});
+//serve ./web as static files
+app.use(express.static(__dirname+"/web"));
 app.get("/api/retrieve", async (req,res)=>{
     let offset = req.query.offset;
     let limit = req.query.limit;
@@ -24,7 +23,7 @@ app.get("/api/retrieve", async (req,res)=>{
     if(limit > 50) return res.send("error");
     limit = parseInt(limit);
     offset = parseInt(offset);
-    let data = await wdb.query("/walls").filter("number", "between", [10000+offset, 10000+offset+limit]).get();
+    let data = await wdb.query("/walls").filter("number", "between", [10000+offset, 10000+offset+limit-1]).get();
     res.send(JSON.stringify(data.getValues()));
 });
 app.get("/api/count", async (req,res)=>{

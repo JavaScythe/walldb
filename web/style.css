@@ -1,0 +1,68 @@
+/*
+ dark, modern, look
+*/
+@font-face {
+    font-family: NerdFont;
+    src: url(/3270NerdFontMono-Regular.ttf);
+}
+body{
+    background-color: #000;
+    color: #fff;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    margin: 0;
+    padding: 0;
+}
+h1{
+    font-size: 3em;
+    font-weight: 300;
+    margin: 0 1em 0 0;
+    padding: 0;
+}
+p{
+    font-size: 1.5em;
+    font-weight: 300;
+    margin: 0;
+    padding: 0;
+}
+.head{
+    color: #fff;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+}
+.res>div>div{
+    display: inline-flex;
+    flex-direction: column;
+    padding: 0px;
+    margin: 0px;
+}
+.res>div{
+    display: flex;
+}
+.res>div>div>div{
+    position: relative;
+}
+.res>div>div>div>div{
+    margin: 0px;
+    cursor: pointer;
+    position: absolute;
+    top: 8px;
+    left: 16px;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+.res>div>div>div>div>a{
+    margin: 0.2em;
+    font-family: NerdFont;
+    font-size: 2em;
+    color: white;
+    text-decoration: none;
+}
+.res>div>div>div:hover>div{
+    opacity: 1;
+}
+img{
+    display: block;
+    width: calc(calc(100vw / 4) - 2px);
+}
